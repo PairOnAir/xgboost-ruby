@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Ruby binding for XGBoost}
   spec.description   = %q{Ruby binding for XGBoost}
-  spec.homepage      = "https://github.com/hwartig/xgboost-ruby"
+  spec.homepage      = "https://github.com/paironair/xgboost-ruby"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
