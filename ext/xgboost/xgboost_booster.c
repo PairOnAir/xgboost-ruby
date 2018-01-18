@@ -2,6 +2,12 @@
 
 VALUE rb_cXgboostBooster;
 
+static void
+rb_xgboost_booster_deallocate(BoosterHandle bh)
+{
+  XGBoosterFree(bh);
+}
+
 static VALUE
 rb_xgboost_booster_allocate(VALUE klass)
 {
@@ -9,12 +15,6 @@ rb_xgboost_booster_allocate(VALUE klass)
   XGBoosterCreate(NULL, 0, &bh);
 
   return Data_Wrap_Struct(klass, NULL, rb_xgboost_booster_deallocate, bh);
-}
-
-static void
-rb_xgboost_booster_deallocate(BoosterHandle bh)
-{
-  XGBoosterFree(bh);
 }
 
 static VALUE
