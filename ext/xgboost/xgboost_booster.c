@@ -39,16 +39,30 @@ rb_xgboost_booster_predict(VALUE self, VALUE matrix)
   Check_Type(matrix, T_ARRAY);
 
   Data_Get_Struct(self, BoosterHandle, bh);
-  long ncols = RARRAY_LEN(matrix);
 
-  float *c_matrix = calloc(ncols, sizeof(float));
+  // TODO: improve error checking
+  // TODO: Decide if we want to fail in case the array is empty
 
-  for (long i = 0; i < ncols; i++)
-    c_matrix[i] = NUM2DBL(RARRAY_AREF(matrix, i));
+  int is_array_of_arrays = RB_TYPE_P(RARRAY_AREF(matrix, 0), T_ARRAY);
+
+  if (!is_array_of_arrays)
+    matrix = rb_ary_new_from_values(1, &matrix);
+
+  long nrows = RARRAY_LEN(matrix);
+  long ncols = RARRAY_LEN(RARRAY_AREF(matrix, 0));
+  float* c_matrix = calloc(ncols * nrows, sizeof(float));
+
+  for (long i = 0; i < nrows; i++) {
+    VALUE row = RARRAY_AREF(matrix, i);
+
+    // TODO make sure dimensions check out
+    for (long j = 0; j < ncols; j++)
+      c_matrix[i * ncols + j] = NUM2DBL(RARRAY_AREF(row, j));
+  }
 
   DMatrixHandle dmatrix;
 
-  XGDMatrixCreateFromMat(c_matrix, 1, ncols, 0, &dmatrix);
+  XGDMatrixCreateFromMat(c_matrix, nrows, ncols, 0, &dmatrix);
 
   const float *preds;
   unsigned long long pred_len;
@@ -58,7 +72,15 @@ rb_xgboost_booster_predict(VALUE self, VALUE matrix)
   XGDMatrixFree(dmatrix);
   free(c_matrix);
 
-  return DBL2NUM(preds[0]);
+  VALUE result = rb_ary_new();
+
+  for (unsigned long long i = 0; i < pred_len; i++)
+    rb_ary_push(result, DBL2NUM(preds[i]));
+
+  if (is_array_of_arrays)
+    return result;
+  else
+    return RARRAY_AREF(result, 0);
 }
 
 static VALUE
