@@ -11,6 +11,8 @@ cd "$target"
 if [ ! -d ".git" ]; then
   git clone --recursive --jobs 4 --depth 1 https://github.com/dmlc/xgboost .
   git submodule update --remote
+else
+  cd "$target"
 fi
 
 if [[ "$OSTYPE" == darwin* ]]; then
