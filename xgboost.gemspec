@@ -14,14 +14,12 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/paironair/xgboost-ruby"
   spec.license       = "MIT"
 
-  spec.files         = `git ls-files -z`.split("\x0").reject do |f|
-    f.match(%r{^spec/})
-  end
+  spec.files         = `git ls-files -z LICENSE.txt lib bin/install_xgboost`.split("\x0")
   spec.require_paths = ["lib"]
-  spec.extensions    = ["ext/xgboost/extconf.rb"]
 
-  spec.add_development_dependency "bundler", "~> 1.15"
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rake-compiler"
-  spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_dependency "ffi"
+  spec.add_dependency "rake"
+
+  spec.add_development_dependency "bundler"
+  spec.add_development_dependency "rspec"
 end

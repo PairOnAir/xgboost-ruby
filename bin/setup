@@ -4,4 +4,4 @@ IFS=$'\n\t'
 set -vx
 
 bundle install --jobs 4
-bin/install_xgboost.sh
+bin/install_xgboost

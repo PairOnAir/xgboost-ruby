@@ -7,11 +7,9 @@
 /pkg/
 /spec/reports/
 /tmp/
-*.bundle
-*.so
-*.o
-*.a
-mkmf.log
+/vendor
+/.ruby-gemset
+/.ruby-version
 
 # rspec failure tracking
 .rspec_status

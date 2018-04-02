@@ -12,14 +12,19 @@ RSpec.describe Xgboost::Booster do
   describe '#predict' do
     context 'when passed a one dimensional array' do
       let(:booster) do
-        booster = Xgboost::Booster.new
-        booster.load(File.join(File.dirname(__FILE__), '../fixtures/linear.model'))
-        booster
+        Xgboost::Booster.new.tap do |booster|
+          booster.load(File.expand_path(File.join(File.dirname(__FILE__), '../fixtures/linear.model')))
+        end
       end
 
       it 'returns a single prediction for that one example' do
         expect(booster.predict([2.0])).to be_within(0.00001).of(4.03468)
         expect(booster.predict([1.0])).to be_within(0.00001).of(2.06937)
+      end
+
+      it 'allows passing the value of missing as an arg' do
+        expect(booster.predict([2.0], missing: Float::NAN)).to be_within(0.00001).of(4.03468)
+        expect(booster.predict([1.0], missing: Float::NAN)).to be_within(0.00001).of(2.06937)
       end
 
       it 'raises an error when given invalid arguments' do
