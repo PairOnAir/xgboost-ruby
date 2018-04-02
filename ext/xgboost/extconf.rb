@@ -10,7 +10,7 @@ target = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'vendor'
 FileUtils.mkdir_p(target)
 
 # clone xgboost
-say_and_run("git clone --recursive --jobs 4 --depth 1 git@github.com:dmlc/xgboost.git #{target}")
+say_and_run("git clone --recursive --jobs 4 --depth 1 https://github.com/dmlc/xgboost #{target}")
 say_and_run("cd #{target}; git submodule update --remote")
 
 # run make in xgboost
