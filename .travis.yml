@@ -1,5 +1,22 @@
-sudo: false
 language: ruby
+install: bin/setup
 rvm:
-  - 2.4.1
-before_install: gem install bundler -v 1.15.4
+  - 2.5.1
+matrix:
+  include:
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
+      env:
+        - MATRIX_EVAL="export CC=gcc-7 && export CXX=g++-7"
+    - os: osx
+      osx_image: xcode9.3beta
+      env:
+        - MATRIX_EVAL=":"
+
+before_install:
+    - eval "${MATRIX_EVAL}"

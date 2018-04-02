@@ -1,35 +1,15 @@
 require 'mkmf'
 
-def say_and_run(cmd)
-  puts "About to run: #{cmd}"
-  `#{cmd}`
-end
+RbConfig::MAKEFILE_CONFIG['CC'] = ENV['CC'] if ENV['CC']
+RbConfig::MAKEFILE_CONFIG['CXX'] = ENV['CXX'] if ENV['CXX']
 
-target = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'vendor', 'xgboost'))
+root = File.expand_path(File.join(File.dirname(__FILE__), '..', '..'))
+target = File.expand_path(File.join(root, 'vendor', 'xgboost'))
 
-FileUtils.mkdir_p(target)
+`#{root}/bin/install_xgboost.sh`
 
-# clone xgboost
-say_and_run("git clone --recursive --jobs 4 --depth 1 https://github.com/dmlc/xgboost #{target}")
-say_and_run("cd #{target}; git submodule update --remote")
-
-# run make in xgboost
-say_and_run("cd #{target}; cp make/minimum.mk config.mk; make -j 4")
-
-# run install name tool to fix library reference
-say_and_run("cd #{target}; install_name_tool -id '#{target}/lib/libxgboost.dylib' lib/libxgboost.dylib")
-
-HEADER_DIRS = [
-  File.join(target, 'include'),
-  File.join(target, 'rabit', 'include'),
-]
-
-LIB_DIRS = [
-  File.join(target, 'lib'),
-  File.join(target, 'rabit', 'lib'),
-]
-
-dir_config('xgboost', HEADER_DIRS, LIB_DIRS)
+dir_config('xgboost', File.join(target, 'include'), File.join(target, 'lib'))
+dir_config('rabit', File.join(target, 'rabit', 'include'), File.join(target, 'rabit', 'lib'))
 
 unless find_header('xgboost/c_api.h')
   abort 'xgboost not found please make sure it is installed'
@@ -39,4 +19,4 @@ unless find_library('xgboost', 'XGBoosterCreate')
   abort 'xgboost not found please make sure it is installed'
 end
 
-create_makefile("xgboost/xgboost")
+create_makefile('xgboost')
