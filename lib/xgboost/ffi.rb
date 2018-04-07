@@ -7,8 +7,9 @@ module Xgboost
 
     {
       XGBoosterCreate: %i[ pointer long pointer ],
-      XGBoosterLoadModel: %i[ pointer string ],
       XGBoosterFree: %i[ pointer ],
+      XGBoosterLoadModel: %i[ pointer string ],
+      XGBoosterSaveModel: %i[ pointer string ],
       XGBoosterPredict: %i[ pointer pointer int uint pointer pointer ],
       XGDMatrixCreateFromMat: %i[ pointer long long float pointer ],
       XGDMatrixFree: %i[ pointer ],

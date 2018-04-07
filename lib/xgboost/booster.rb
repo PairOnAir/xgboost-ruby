@@ -14,6 +14,10 @@ module Xgboost
       FFI.XGBoosterLoadModel(handle_pointer, path)
     end
 
+    def save(path)
+      FFI.XGBoosterSaveModel(handle_pointer, path)
+    end
+
     def predict(input)
       raise TypeError unless input.is_a?(Array)
 
