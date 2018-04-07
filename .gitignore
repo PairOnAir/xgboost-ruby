@@ -7,6 +7,9 @@
 /pkg/
 /spec/reports/
 /tmp/
+/vendor
+/.ruby-gemset
+/.ruby-version
 *.bundle
 *.so
 *.o

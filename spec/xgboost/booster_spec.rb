@@ -12,9 +12,9 @@ RSpec.describe Xgboost::Booster do
   describe '#predict' do
     context 'when passed a one dimensional array' do
       let(:booster) do
-        booster = Xgboost::Booster.new
-        booster.load(File.join(File.dirname(__FILE__), '../fixtures/linear.model'))
-        booster
+        Xgboost::Booster.new.tap do |booster|
+          booster.load(File.expand_path(File.join(File.dirname(__FILE__), '../fixtures/linear.model')))
+        end
       end
 
       it 'returns a single prediction for that one example' do
