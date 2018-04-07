@@ -25,8 +25,9 @@ module Xgboost
     def predict(input)
       raise TypeError unless input.is_a?(Array)
 
-      input_2d = input.first.is_a?(Array)
-      input = [input] unless input_2d
+      unless input_2d = input.first.is_a?(Array)
+        input = [input]
+      end
 
       out_len = ::FFI::MemoryPointer.new(:ulong_long)
       out_result = ::FFI::MemoryPointer.new(:pointer)
