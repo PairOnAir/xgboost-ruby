@@ -3,11 +3,11 @@ module Xgboost
     def initialize
       @handle = ::FFI::MemoryPointer.new(:pointer)
       FFI.XGBoosterCreate(nil, 0, @handle)
-      ObjectSpace.define_finalizer(self, self.class.finalizer(handle_pointer))
+      self.class.define_finalizer(self)
     end
 
-    def self.finalizer(pointer)
-      -> { puts 'calling finalizer'; FFI.XGBoosterFree(pointer) }
+    def self.define_finalizer(obj)
+      ObjectSpace.define_finalizer(obj) { obj.free! }
     end
 
     def load(path)
@@ -16,6 +16,10 @@ module Xgboost
 
     def save(path)
       FFI.XGBoosterSaveModel(handle_pointer, path)
+    end
+
+    def free!
+      FFI.XGBoosterFree(handle_pointer)
     end
 
     def predict(input)
