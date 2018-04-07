@@ -1,8 +1,8 @@
 require 'ffi'
 
 module Xgboost
-  module Native
-    extend FFI::Library
+  module FFI
+    extend ::FFI::Library
     ffi_lib 'libxgboost'
 
     {
