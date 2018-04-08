@@ -10,8 +10,10 @@ cd "$target"
 
 if [ ! -d ".git" ]; then
   git clone --recursive --jobs 4 --depth 1 https://github.com/dmlc/xgboost .
-  git submodule update --remote
 fi
+
+git pull
+git submodule update --remote
 
 if [[ "$OSTYPE" == darwin* ]]; then
   cp make/minimum.mk config.mk
