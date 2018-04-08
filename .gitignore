@@ -10,11 +10,6 @@
 /vendor
 /.ruby-gemset
 /.ruby-version
-*.bundle
-*.so
-*.o
-*.a
-mkmf.log
 
 # rspec failure tracking
 .rspec_status
