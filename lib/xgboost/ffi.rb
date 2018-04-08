@@ -3,7 +3,9 @@ require 'ffi'
 module Xgboost
   module FFI
     extend ::FFI::Library
-    ffi_lib 'xgboost'
+    lib_name = ::FFI.map_library_name('xgboost')
+    lib_path = File.expand_path(File.join('..', '..', '..', 'vendor', 'xgboost', 'lib', lib_name), __FILE__)
+    ffi_lib ['xgboost', lib_path]
 
     {
       XGBoosterCreate: %i[ pointer long pointer ],
