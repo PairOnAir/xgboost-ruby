@@ -1,10 +1,11 @@
 require 'ffi'
+require 'xgboost/root'
 
 module Xgboost
   module FFI
     extend ::FFI::Library
     lib_name = ::FFI.map_library_name('xgboost')
-    lib_path = File.expand_path(File.join('..', '..', '..', 'vendor', 'xgboost', 'lib', lib_name), __FILE__)
+    lib_path = File.join(Xgboost.root, 'vendor', 'xgboost', 'lib', lib_name)
     ffi_lib ['xgboost', lib_path]
 
     {

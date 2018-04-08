@@ -1,3 +1,5 @@
+require 'xgboost/ffi'
+
 module Xgboost
   class Booster
     def initialize
