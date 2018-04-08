@@ -7,6 +7,9 @@ module Xgboost
     end
 
     def self.define_finalizer(obj)
+      # TODO I wouldn't be surprised if this didn't work,
+      # the block keeps a reference to obj, so obj
+      # will never be GC'd
       ObjectSpace.define_finalizer(obj) { obj.free! }
     end
 
