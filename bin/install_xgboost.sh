@@ -20,7 +20,3 @@ if [[ "$OSTYPE" == darwin* ]]; then
 fi
 
 make -j 4
-
-if [[ "$OSTYPE" == darwin* ]] ; then
-  install_name_tool -id "$target/lib/libxgboost.dylib" lib/libxgboost.dylib
-fi
