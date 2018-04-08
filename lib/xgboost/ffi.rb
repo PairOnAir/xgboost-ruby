@@ -3,7 +3,7 @@ require 'ffi'
 module Xgboost
   module FFI
     extend ::FFI::Library
-    ffi_lib 'libxgboost'
+    ffi_lib 'xgboost'
 
     {
       XGBoosterCreate: %i[ pointer long pointer ],
