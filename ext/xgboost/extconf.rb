@@ -19,4 +19,4 @@ unless find_library('xgboost', 'XGBoosterCreate')
   abort 'xgboost not found please make sure it is installed'
 end
 
-create_makefile('xgboost')
+create_makefile('xgboost/xgboost')
