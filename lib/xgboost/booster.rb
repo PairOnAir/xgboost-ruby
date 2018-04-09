@@ -1,4 +1,4 @@
-require 'xgboost/ffi'
+require 'ffi'
 
 module Xgboost
   class Booster
