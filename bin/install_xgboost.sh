@@ -9,9 +9,9 @@ target=$(cd "$target"; pwd -P)
 cd "$target"
 
 if [ ! -d .git ]; then
-  git clone --recurse-submodules --jobs 4 https://github.com/dmlc/xgboost .
+  git clone --recurse-submodules https://github.com/dmlc/xgboost .
 else
-  git fetch --recurse-submodules --jobs 4
+  git fetch --recurse-submodules
 fi
 
 if [[ -z "$1" ]]; then
