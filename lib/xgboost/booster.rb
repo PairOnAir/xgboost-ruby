@@ -5,14 +5,11 @@ module Xgboost
     def initialize
       @handle = ::FFI::MemoryPointer.new(:pointer)
       FFI.XGBoosterCreate(nil, 0, @handle)
-      self.class.define_finalizer(self)
+      ObjectSpace.define_finalizer(self, self.class.finalize(handle_pointer))
     end
 
-    def self.define_finalizer(obj)
-      # TODO I wouldn't be surprised if this didn't work,
-      # the block keeps a reference to obj, so obj
-      # will never be GC'd
-      ObjectSpace.define_finalizer(obj) { obj.free! }
+    def self.finalize(pointer)
+      proc { FFI.XGBoosterFree(pointer) }
     end
 
     def load(path)
@@ -21,10 +18,6 @@ module Xgboost
 
     def save(path)
       FFI.XGBoosterSaveModel(handle_pointer, path)
-    end
-
-    def free!
-      FFI.XGBoosterFree(handle_pointer)
     end
 
     def predict(input, missing: Float::NAN)
