@@ -22,6 +22,11 @@ RSpec.describe Xgboost::Booster do
         expect(booster.predict([1.0])).to be_within(0.00001).of(2.06937)
       end
 
+      it 'allows passing the value of missing as an arg' do
+        expect(booster.predict([2.0], missing: Float::NAN)).to be_within(0.00001).of(4.03468)
+        expect(booster.predict([1.0], missing: Float::NAN)).to be_within(0.00001).of(2.06937)
+      end
+
       it 'raises an error when given invalid arguments' do
         expect { booster.predict(2.0) }.to raise_error(TypeError)
         expect { booster.predict(nil) }.to raise_error(TypeError)

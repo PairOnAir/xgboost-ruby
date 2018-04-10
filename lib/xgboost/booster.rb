@@ -27,7 +27,7 @@ module Xgboost
       FFI.XGBoosterFree(handle_pointer)
     end
 
-    def predict(input)
+    def predict(input, missing: Float::NAN)
       raise TypeError unless input.is_a?(Array)
 
       unless input_2d = input.first.is_a?(Array)
@@ -41,7 +41,7 @@ module Xgboost
       data.put_array_of_float(0, input.flatten)
 
       dmatrix = ::FFI::MemoryPointer.new(:pointer)
-      FFI.XGDMatrixCreateFromMat(data, input.count, input.first.count, 0, dmatrix)
+      FFI.XGDMatrixCreateFromMat(data, input.count, input.first.count, missing, dmatrix)
 
       FFI.XGBoosterPredict(handle_pointer, dmatrix.read_pointer, 0, 0, out_len, out_result)
 
