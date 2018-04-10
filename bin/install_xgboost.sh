@@ -8,12 +8,18 @@ mkdir -p "$target"
 target=$(cd "$target"; pwd -P)
 cd "$target"
 
-if [ ! -d ".git" ]; then
-  git clone --recursive --jobs 4 --depth 1 https://github.com/dmlc/xgboost .
+if [ ! -d .git ]; then
+  git clone --recurse-submodules --jobs 4 https://github.com/dmlc/xgboost .
+else
+  git fetch --recurse-submodules --jobs 4
 fi
 
-git pull
-git submodule update --remote
+if [[ -z "$1" ]]; then
+  git checkout origin/master
+  git submodule update --remote
+else
+  git checkout "$1"
+fi
 
 if [[ "$OSTYPE" == darwin* ]]; then
   cp make/minimum.mk config.mk

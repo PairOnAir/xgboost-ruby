@@ -8,8 +8,8 @@ module Xgboost
     def self.add_tasks
       namespace :xgboost do
         desc 'Clones and compiles xgboost'
-        task :install do
-          `#{Xgboost.root}/bin/install_xgboost.sh`
+        task :install, :sha do |_t, args|
+          system(File.join(Xgboost.root, 'bin', 'install_xgboost.sh'), args[:sha])
         end
       end
     end
