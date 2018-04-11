@@ -1,5 +1,7 @@
 ### Unreleased
 
+### 0.2.1 (2018-04-11)
+
 * Fix `rake xgboost:install` without the SHA argument
 
 ### 0.2.0 (2018-04-11)
