@@ -1,4 +1,4 @@
-### Not released
+### 0.2.0 (2018-04-11)
 
 * Add `xbgoost:install` rake task
 * Replace C extension with FFI
