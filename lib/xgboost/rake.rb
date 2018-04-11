@@ -9,7 +9,8 @@ module Xgboost
       namespace :xgboost do
         desc 'Clones and compiles xgboost'
         task :install, :sha do |_t, args|
-          system(File.join(Xgboost.root, 'bin', 'install_xgboost'), args[:sha])
+          cmd_args = [args[:sha]].compact
+          system(File.join(Xgboost.root, 'bin', 'install_xgboost'), *cmd_args)
         end
       end
     end

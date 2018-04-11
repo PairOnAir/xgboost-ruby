@@ -1,3 +1,7 @@
+### Unreleased
+
+* Fix `rake xgboost:install` without the SHA argument
+
 ### 0.2.0 (2018-04-11)
 
 * Add `xbgoost:install` rake task
