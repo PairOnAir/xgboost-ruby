@@ -4,7 +4,7 @@
 
 This gem provides Ruby bindings to the [Xgboost](https://github.com/dmlc/xgboost) library. Xgboost is a Scalable, Portable and Distributed Gradient Boosting Library.
 
-The gem itself is currently in alpha stage and is not yet tested for use in production.
+The gem is already used in production by [HotelTonight](https://github.com/hoteltonight), although it's still pre-1.0, so some APIs can change.
 
 ## Dependency on the XGBoost shared library
 
